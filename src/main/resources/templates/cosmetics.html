@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/cosmetic.css}">
+</head>
+<body>
+    
+<div class="container">
+
+<h1>♡ My Cosme ♡</h1>
+<p class="subtitle">所持コスメ管理アプリ</p>
+
+
+<!-- ========================= -->
+<!-- 名前検索 -->
+<!-- ========================= -->
+<div class="search-box">
+
+<h2>商品名から検索</h2>
+
+<form th:action="@{/cosmetics/search/name}"
+method="get">
+
+<input type="text"
+name="name"
+placeholder="例：ティント">
+
+<button type="submit">
+検索
+</button>
+
+</form>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- ブランド検索 -->
+<!-- ========================= -->
+<div class="search-box">
+
+<h2>ブランドから検索</h2>
+
+<form th:action="@{/cosmetics/search/brand}"
+method="get">
+
+<select name="brandId">
+
+<option value="">
+ブランドを選択
+</option>
+
+<option
+th:each="brand : ${brandList}"
+th:value="${brand.id}"
+th:text="${brand.name}">
+</option>
+
+</select>
+
+<button type="submit">
+検索
+</button>
+
+</form>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- カテゴリ検索 -->
+<!-- ========================= -->
+<div class="search-box">
+
+<h2>カテゴリから検索</h2>
+
+<form th:action="@{/cosmetics/search/category}"
+method="get">
+
+<select name="categoryId">
+
+<option value="">
+カテゴリを選択
+</option>
+
+<option
+th:each="category : ${categoryList}"
+th:value="${category.id}"
+th:text="${category.name}">
+</option>
+
+</select>
+
+<button type="submit">
+検索
+</button>
+
+</form>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- プチプラ / ハイブランド -->
+<!-- ========================= -->
+<div class="search-box">
+
+<h2>価格帯から検索</h2>
+
+<form th:action="@{/cosmetics/search/price}"
+method="get">
+
+<select name="priceType">
+
+<option value="">
+価格帯を選択
+</option>
+
+<option value="0">
+プチプラ
+</option>
+
+<option value="1">
+ハイブランド
+</option>
+
+</select>
+
+<button type="submit">
+検索
+</button>
+
+</form>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- 全件表示 -->
+<!-- ========================= -->
+<div class="all-button-area">
+
+<a th:href="@{/cosmetics}">
+全てのコスメを見る
+</a>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- コスメ一覧 -->
+<!-- ========================= -->
+
+<h2 class="list-title">
+♡ Cosmetic List ♡
+</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>商品名</th>
+<th>ブランド</th>
+<th>カテゴリ</th>
+<th>タイプ</th>
+<th>管理</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr th:each="cosmetic : ${cosmeticList}">
+
+<td th:text="${cosmetic.name}">
+商品名
+</td>
+
+<td th:text="${cosmetic.brandName}">
+ブランド
+</td>
+
+<td th:text="${cosmetic.categoryName}">
+カテゴリ
+</td>
+
+<td>
+<span
+th:if="${cosmetic.priceType == 0}"
+class="petit">
+プチプラ
+</span>
+
+<span
+th:if="${cosmetic.priceType == 1}"
+class="high">
+ハイブランド
+</span>
+</td>
+
+<td>
+    <a th:href="@{/cosmetics/finish/{id}(id=${cosmetic.id})}" class="finish-link">使い終わり</a>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+</div>
+<div class="insert-button-area">
+
+<a th:href="@{/cosmetics/insert}"
+class="insert-link">
++ 新しいコスメを登録
+</a>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/cosmetic.css}">
+</head>
+
+<body>
+
+<div class="insert-box">
+
+<h1>♡ コスメ新規登録 ♡</h1>
+
+<form th:action="@{/cosmetics/insert}"
+method="post">
+
+<div class="form-group">
+<label>商品名</label>
+
+<input type="text"
+name="name"
+placeholder="例:ルージュ ディオール オン ステージ"
+required>
+</div>
+
+
+<div class="form-group">
+<label>ブランド</label>
+
+<select name="brandId" required>
+
+<option value="">
+ブランドを選択
+</option>
+
+<option
+th:each="brand : ${brandList}"
+th:value="${brand.id}"
+th:text="${brand.name}">
+</option>
+
+</select>
+</div>
+
+
+<div class="form-group">
+<label>カテゴリ</label>
+
+<select name="categoryId" required>
+
+<option value="">
+カテゴリを選択
+</option>
+
+<option
+th:each="category : ${categoryList}"
+th:value="${category.id}"
+th:text="${category.name}">
+</option>
+
+</select>
+</div>
+
+
+<div class="form-group">
+<label>価格帯</label>
+
+<div class="price-select">
+
+<label>
+<input type="radio"
+name="priceType"
+value="0"
+required>
+プチプラ
+</label>
+
+<label>
+<input type="radio"
+name="priceType"
+value="1">
+ハイブランド
+</label>
+
+</div>
+</div>
+
+
+<button type="submit"
+class="insert-button">
+登録する
+</button>
+
+</form>
+
+
+<a th:href="@{/cosmetics}"
+class="back-link">
+← 一覧に戻る
+</a>
+
+</div>
+
+</body>
+</html>
